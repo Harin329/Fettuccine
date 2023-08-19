@@ -1,5 +1,5 @@
 <title>
-    <img classname="icon" src="./AppIcon.png" alt="App Icon" />
+    <img class="icon" src="./AppIcon.png" alt="App Icon" />
     <h1>Fettuccine</h1>
 </title>
 

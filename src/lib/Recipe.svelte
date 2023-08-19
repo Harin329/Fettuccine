@@ -1,26 +1,56 @@
 <script>
 	import AddStep from '$lib/AddStep.svelte';
 	import Step from '$lib/Step.svelte';
+	import { recipe } from '../stores';
+
+	/**
+	 * @param {KeyboardEvent} e
+	 */
+	function handleSubmit(e) {
+		if (e.key === 'Enter') {
+			console.log($recipe);
+		}
+	}
 </script>
 
 <div class="recipe">
 	<div class="imageBox">
-		<img src="./AppIcon.png" alt="App Icon" />
+		<img src={$recipe[0]?.header_image ?? './AppIcon.png'} alt="App Icon" />
 	</div>
 	<div class="infoBox">
 		<div class="infoTopRow">
-			<input class="recipeName" placeholder="Recipe Name" />
+			<input
+				class="recipeName"
+				placeholder="Recipe Name"
+				bind:value={$recipe[0].recipe_name}
+				on:keypress={handleSubmit}
+			/>
 			<div class="inputSection">
 				<h4>Servings:</h4>
-				<input class="smallInput" placeholder="0" />
+				<input
+					class="smallInput"
+					placeholder="0"
+					bind:value={$recipe[0].servings}
+					on:keypress={handleSubmit}
+				/>
 			</div>
 			<div class="inputSection">
 				<h4>Cooking Time:</h4>
-				<input class="smallInput" placeholder="0" />
+				<input
+					class="smallInput"
+					placeholder="0"
+					bind:value={$recipe[0].cooking_time}
+					on:keypress={handleSubmit}
+				/>
 				<p>mins</p>
 			</div>
 		</div>
-		<textarea class="recipeDescription" placeholder="Enter recipe description..." />
+		<textarea
+			class="recipeDescription"
+			placeholder="Enter recipe description..."
+			bind:value={$recipe[0].recipe_description}
+			on:keypress={handleSubmit}
+		/>
 	</div>
 </div>
 <Step />
@@ -60,12 +90,17 @@
 		border-radius: 5px;
 	}
 
+	img {
+		width: 100%;
+		height: 100%;
+		border-radius: 5px;
+	}
+
 	.infoBox {
 		display: flex;
 		flex: 3;
 		flex-direction: column;
 		margin-left: 20px;
-		height: 300px;
 	}
 
 	.infoTopRow {

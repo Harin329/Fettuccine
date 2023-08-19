@@ -2,6 +2,7 @@
 	<img class="icon" src="./AddIcon.png" alt="Add Step" />
 	<p>Add Step</p>
 </div>
+<div class="spacer" />
 
 <style>
 	.addStep {
@@ -9,6 +10,11 @@
 		flex-direction: row;
 		align-items: center;
 		cursor: pointer;
+	}
+
+	.spacer {
+        width: 100px;
+		padding-bottom: 100px;
 	}
 
 	img {

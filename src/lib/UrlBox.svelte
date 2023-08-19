@@ -1,8 +1,45 @@
-<input placeholder="Enter recipe url..." />
+<script>
+	import { recipe } from '../stores';
+
+	/**
+	 * @type {String}
+	 */
+	let urlText;
+
+	/**
+	 * @param {KeyboardEvent} e
+	 */
+	function handleSubmit(e) {
+		if (e.key === 'Enter') {
+			if (urlText) {
+				postRecipe(urlText);
+			}
+		}
+	}
+
+	/**
+	 * @param {String} urlText
+	 */
+	async function postRecipe(urlText) {
+		const response = await fetch(
+			`http://localhost:8080/recipe/url/?url=${encodeURIComponent(urlText)}&creatorId=${"Qnj6AjQOLoZlJw4TZBpRE3iNz0K3"}`,
+			{
+				method: 'POST',
+				redirect: 'follow',
+			}
+		)
+		const result = await response.json();
+		$recipe = result[0];
+		console.log(result[0]);
+	}
+</script>
+
+<input placeholder="Enter recipe url..." bind:value={urlText} on:keypress={handleSubmit} />
 
 <style>
 	input {
 		width: 80%;
+		min-height: 40px;
 		height: 40px;
 		margin-top: 20px;
 		margin-bottom: 20px;

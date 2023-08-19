@@ -1,20 +1,47 @@
+<script>
+	import { recipe } from '../stores';
+
+    /**
+	 * @param {KeyboardEvent} e
+	 */
+	function handleSubmit(e) {
+		if (e.key === 'Enter') {
+			console.log($recipe);
+		}
+	}
+</script>
+
 <div class="step">
-	<h4>Step 1:</h4>
-	<div class="stepContainer">
-		<textarea class="recipeDescription" placeholder="Enter step instructions..." />
-		<img class="icon" src="./DeleteIcon.png" alt="Delete" />
-	</div>
-	<div class="stepContainer2">
-		<div class="inputSection">
-			<h4>Ingredients:</h4>
-			<input class="largeInput" placeholder="Enter step ingredients..." />
+	{#each $recipe[1] ?? [] as step, i}
+		<h4>Step {i + 1}:</h4>
+		<div class="stepContainer">
+			<textarea
+				class="recipeDescription"
+				placeholder="Enter step instructions..."
+				bind:value={step.step_description}
+                on:keypress={handleSubmit}
+			/>
+			<img class="icon" src="./DeleteIcon.png" alt="Delete" />
 		</div>
-		<div class="inputSection">
-			<h4>Step Time:</h4>
-			<input class="smallInput" placeholder="0" />
-			<p>mins</p>
+		<div class="stepContainer2">
+			<div class="inputSection">
+				<h4>Ingredients:</h4>
+				<input
+					class="largeInput"
+					placeholder="Enter step ingredients..."
+					value={($recipe[2] ?? [])
+						.filter((/** @type {{ step_uuid: any; }} */ i) => i.step_uuid === step.step_uuid)
+						.map((/** @type {{ ingredient_name: any; }} */ i) => i.ingredient_name)
+						.join(';;;')}
+				/>
+			</div>
+			<div class="inputSection">
+				<h4>Step Time:</h4>
+				<input class="smallInput" placeholder="0" bind:value={step.step_time} on:keypress={handleSubmit} />
+				<p>mins</p>
+			</div>
 		</div>
-	</div>
+	{/each}
 </div>
 
 <style>
