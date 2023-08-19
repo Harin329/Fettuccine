@@ -5,7 +5,7 @@
 		width: 80%;
 		height: 40px;
 		margin-top: 20px;
-        margin-bottom: 20px;
+		margin-bottom: 20px;
 		padding: 0 1%;
 		background-color: #d9d9d9;
 		font-weight: 600;
