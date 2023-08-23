@@ -16,7 +16,7 @@
 	 * @param {any} recipe
 	 */
 	async function updateRecipe(recipe) {
-		const response = await fetch(`${endpoint}/recipe/`, {
+		const response = await fetch(`${$endpoint}/recipe/`, {
 			method: 'PUT',
 			redirect: 'follow',
 			headers: {

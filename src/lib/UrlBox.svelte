@@ -22,7 +22,7 @@
 	 */
 	async function postRecipe(urlText) {
 		const response = await fetch(
-			`${endpoint}/recipe/url/?url=${encodeURIComponent(urlText)}&creatorId=${"Qnj6AjQOLoZlJw4TZBpRE3iNz0K3"}`,
+			`${$endpoint}/recipe/url/?url=${encodeURIComponent(urlText)}&creatorId=${"Qnj6AjQOLoZlJw4TZBpRE3iNz0K3"}`,
 			{
 				method: 'POST',
 				redirect: 'follow',
