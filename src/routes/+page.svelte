@@ -3,6 +3,7 @@
 	import UrlBox from '$lib/UrlBox.svelte';
 	import Recipe from '$lib/Recipe.svelte';
 	import { recipe } from '../stores';
+	export const prerender = true;
 </script>
 
 <main>
