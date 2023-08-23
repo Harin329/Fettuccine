@@ -1,6 +1,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
+  <a href="https://fettuccine.hungrii.com/">
+    <img src="static/AppIcon.png" alt="Logo" height="100" resize>
+  </a>
   <h3 align="center">Fettuccine</h3>
 </p>
 
