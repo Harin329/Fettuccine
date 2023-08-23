@@ -1,15 +1,36 @@
 <script>
 	import AddStep from '$lib/AddStep.svelte';
 	import Step from '$lib/Step.svelte';
-	import { recipe } from '../stores';
+	import { endpoint, recipe } from '../stores';
 
 	/**
 	 * @param {KeyboardEvent} e
 	 */
 	function handleSubmit(e) {
 		if (e.key === 'Enter') {
-			console.log($recipe);
+			updateRecipe($recipe);
 		}
+	}
+
+	/**
+	 * @param {any} recipe
+	 */
+	async function updateRecipe(recipe) {
+		const response = await fetch(`${endpoint}/recipe/`, {
+			method: 'PUT',
+			redirect: 'follow',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				recipe: recipe[0],
+				steps: recipe[1],
+				ingredients: recipe[2]
+			})
+		});
+		const result = await response.json();
+		console.log(result);
 	}
 </script>
 
@@ -50,6 +71,7 @@
 			placeholder="Enter recipe description..."
 			bind:value={$recipe[0].recipe_description}
 			on:keypress={handleSubmit}
+			on:blur={() => {updateRecipe($recipe)}}
 		/>
 	</div>
 </div>

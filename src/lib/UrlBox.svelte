@@ -1,5 +1,5 @@
 <script>
-	import { recipe } from '../stores';
+	import { endpoint, recipe } from '../stores';
 
 	/**
 	 * @type {String}
@@ -22,7 +22,7 @@
 	 */
 	async function postRecipe(urlText) {
 		const response = await fetch(
-			`http://localhost:8080/recipe/url/?url=${encodeURIComponent(urlText)}&creatorId=${"Qnj6AjQOLoZlJw4TZBpRE3iNz0K3"}`,
+			`${endpoint}/recipe/url/?url=${encodeURIComponent(urlText)}&creatorId=${"Qnj6AjQOLoZlJw4TZBpRE3iNz0K3"}`,
 			{
 				method: 'POST',
 				redirect: 'follow',

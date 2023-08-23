@@ -1,13 +1,35 @@
 <script>
-	import { recipe } from '../stores';
+	import { endpoint, recipe } from '../stores';
+	// import StepDetails from './StepDetails.svelte';
 
-    /**
+	/**
 	 * @param {KeyboardEvent} e
 	 */
 	function handleSubmit(e) {
 		if (e.key === 'Enter') {
-			console.log($recipe);
+			updateRecipe($recipe);
 		}
+	}
+
+	/**
+	 * @param {any} recipe
+	 */
+	async function updateRecipe(recipe) {
+		const response = await fetch(`${endpoint}/recipe/`, {
+			method: 'PUT',
+			redirect: 'follow',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				recipe: recipe[0],
+				steps: recipe[1],
+				ingredients: recipe[2]
+			})
+		});
+		const result = await response.json();
+		console.log(result);
 	}
 </script>
 
@@ -19,28 +41,28 @@
 				class="recipeDescription"
 				placeholder="Enter step instructions..."
 				bind:value={step.step_description}
-                on:keypress={handleSubmit}
+				on:keypress={handleSubmit}
+				on:blur={() => {
+					step.step_index = i;
+					updateRecipe($recipe);
+				}}
 			/>
-			<img class="icon" src="./DeleteIcon.png" alt="Delete" />
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+			<img
+				class="icon"
+				src="./DeleteIcon.png"
+				alt="Delete"
+				on:click={() => {
+					const newSteps = $recipe[1].filter(
+						(/** @type {{ step_uuid: any; }} */ s) => s.step_uuid !== step.step_uuid
+					);
+					$recipe[1] = newSteps;
+					updateRecipe($recipe);
+				}}
+			/>
 		</div>
-		<div class="stepContainer2">
-			<div class="inputSection">
-				<h4>Ingredients:</h4>
-				<input
-					class="largeInput"
-					placeholder="Enter step ingredients..."
-					value={($recipe[2] ?? [])
-						.filter((/** @type {{ step_uuid: any; }} */ i) => i.step_uuid === step.step_uuid)
-						.map((/** @type {{ ingredient_name: any; }} */ i) => i.ingredient_name)
-						.join(';;;')}
-				/>
-			</div>
-			<div class="inputSection">
-				<h4>Step Time:</h4>
-				<input class="smallInput" placeholder="0" bind:value={step.step_time} on:keypress={handleSubmit} />
-				<p>mins</p>
-			</div>
-		</div>
+		<!-- <StepDetails step={step} /> -->
 	{/each}
 </div>
 
@@ -60,40 +82,6 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-	}
-
-	.stepContainer2 {
-		display: flex;
-		flex-direction: row;
-		height: 100px;
-		width: 96%;
-		align-items: baseline;
-		justify-content: space-between;
-	}
-
-	.inputSection {
-		display: flex;
-		flex-direction: row;
-		align-items: baseline;
-	}
-
-	.smallInput {
-		border: none;
-		font-weight: 600;
-		font-size: 20px;
-		padding-bottom: 5px;
-		border-bottom: 1px solid #737373;
-		text-align: center;
-		width: 35px;
-	}
-
-	.largeInput {
-		border: none;
-		font-size: 14px;
-		padding-bottom: 5px;
-		margin-left: 10px;
-		border-bottom: 1px solid #737373;
-		width: 900px;
 	}
 
 	.recipeDescription {
