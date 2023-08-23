@@ -1,10 +1,10 @@
-<title>
+<div class="title">
     <img class="icon" src="./AppIcon.png" alt="App Icon" />
     <h1>Fettuccine</h1>
-</title>
+</div>
 
 <style>
-    title {
+    .title {
         display: flex;
         flex-direction: row;
         align-items: center;
